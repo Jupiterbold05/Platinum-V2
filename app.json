@@ -1,0 +1,31 @@
+{
+  "name": "Platinum-v2",
+  "description": "Javascript WhatsApp bot made by Jupiterbold",
+  "logo": "https://i.imgur.com/74NG4nf.jpeg",
+  "keywords": ["bot,platinum-v2,Platinum-V2,Platinum-v2,PLATINUM-V2"],
+  "success_url": "/",
+
+  "env": {
+    "SESSION_ID": {
+      "description": "PFhHTD4a#WzdfSiwfDazIYucl0iLvKknHim2xKCYXbIKTZk8sNi8",
+      "required": true
+    },  
+
+    "ALIVE_IMG": {
+      "description": "https://i.imgur.com/74NG4nf.jpeg",
+      "required": true
+    },
+    
+    "ALIVE_MSG": {
+      "description": "Hey pookie Pʟᴀᴛɪɴᴜᴍ-V2 is alive 🎀.",
+      "required": true
+    }   
+},
+
+     "buildpacks": [
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
+        }
+     ],
+  "stack": "heroku-24"
+}

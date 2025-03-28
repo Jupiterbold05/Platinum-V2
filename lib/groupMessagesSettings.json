@@ -1,0 +1,22 @@
+{
+  "welcome": {
+    "120363387328956128@g.us": {
+      "enabled": true,
+      "message": "Hello {user}, welcome to {group}! Enjoy your stay!"
+    },
+    "120363308105749291@g.us": {
+      "enabled": true,
+      "message": "welcome {user} to *ʀɪᴢᴢʟᴇʀs ᴇᴛ ᴄᴀᴛғɪsʜᴇʀs™* 🌍 🤡🎭\nDo an intro with your picture and location \nDon't ghost \nDon't share links \nDon't mention the group on your status (you'll be kicked) thanks"
+    }
+  },
+  "goodbye": {
+    "120363387328956128@g.us": {
+      "enabled": true,
+      "message": "goodbye {user} from *ʀɪᴢᴢʟᴇʀs ᴇᴛ ᴄᴀᴛғɪsʜᴇʀs™* 🌍 🤡🎭\nThanks for your time here and for also creating space for reason people to join 🤡"
+    },
+    "120363308105749291@g.us": {
+      "enabled": false,
+      "message": ""
+    }
+  }
+}
