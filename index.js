@@ -93,6 +93,36 @@ process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection:', reason);
 });
 
+// New functions to fetch and compare versions
+const { execSync } = require('child_process');
+
+async function fetchLatestCommit() {
+    try {
+        const repoOwner = 'Jupiterbold05';
+        const repoName = 'Platinum-V2';
+        const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/commits/main`;
+        const response = await axios.get(apiUrl);
+        return response.data.sha; // latest commit hash
+    } catch (error) {
+        console.error('Error fetching latest commit:', error);
+        return null;
+    }
+}
+
+function getCurrentVersion() {
+    try {
+        // Executes 'git rev-parse HEAD' to get the current commit hash.
+        const commitHash = execSync('git rev-parse HEAD').toString().trim();
+        return commitHash;
+    } catch (error) {
+        console.error("Error getting current version from git:", error);
+        return null;
+    }
+}
+
+// Global connection variable so it can be accessed in other endpoints if needed.
+let globalConn;
+
 async function loadSession() {
     if (!fs.existsSync(__dirname + '/session/creds.json')) {
         if (!config.SESSION_ID) {
@@ -130,7 +160,7 @@ async function connectToWA() {
             version
         });
 
-        conn.ev.on('connection.update', (update) => {
+        conn.ev.on('connection.update', async (update) => {
             const { connection, lastDisconnect, qr } = update;
 
             if (qr) {
@@ -159,11 +189,23 @@ async function connectToWA() {
                 console.log(`✅ Plugins installed: ${commands.length}\n`);
                 console.log('Bot connected to WhatsApp ✅');
 
+                // Check for bot version update
+                const latestCommit = await fetchLatestCommit();
+                const currentCommit = getCurrentVersion();
+                let updateNotification = '';
+                if (latestCommit && currentCommit && latestCommit !== currentCommit) {
+                    updateNotification = `\n\n🚨 *Update Available!* 🚨\nYour bot is running commit \`${currentCommit.slice(0, 7)}\`, but the latest is \`${latestCommit.slice(0, 7)}\`.\nPlease fork the repo and redeploy to get the latest features and fixes.\nRepository: https://github.com/Jupiterbold05/Platinum-V2`;
+                }
+
                 let up = `🌟 *Platinum-V2 Connected Successfully* ✅\n\n`
                     + `👤 *Owner:* ${ownerName} (${ownerNumber.join(", ")})\n`
                     + `⚙️ *Mode:* ${currentMode}\n`
                     + `🔧 *Plugins Loaded:* ${commands.length}\n`
-                    + `🛠 *Prefix:* ${prefix}`;
+                    + `🛠 *Prefix:* ${prefix}`
+                    + updateNotification;
+
+                // Store connection globally for later use if needed.
+                globalConn = conn;
 
                 conn.sendMessage(ownerNumber[0] + "@s.whatsapp.net", { 
                     image: { url: "https://files.catbox.moe/gzrefm.jpg" }, 
