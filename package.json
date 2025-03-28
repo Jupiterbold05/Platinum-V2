@@ -6,7 +6,10 @@
   "scripts": {
     "start": "pm2 start index.js --deep-monitoring --attach --name Platinum-v2",
     "stop": "pm2 stop Platinum-v2",
-    "restart": "pm2 restart Platinum-v2"
+    "restart": "pm2 restart Platinum-v2",
+    "heroku-postbuild": "git clone https://github.com/Jupiterbold05/Platinum-V2.git temp && mv temp/.git .git && rm -rf temp && npx puppeteer@latest install  --y",
+      "fis-heroku-postbuild": "git clone https://github.com/Jupiterbold05/Platinum-V2.git temp1 && rsync -av temp1/* ./ && rsync -av temp1/.* ./ && rm -rf temp1 && npm i && npx puppeteer@latest install",
+      "postinstall": "npx puppeteer@latest install --y"
   },
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
@@ -27,5 +30,21 @@
     "vm": "^0.1.0",
     "wa-sticker-formatter": "^4.3.2",
     "yt-search": "^2.10.0"
-  }
+  },
+    "directories": {
+      "lib": "lib",
+      "plugins": "plugins"
+   },
+   "devDependencies": {
+      "pino": "^7.0.5"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Jupiterbold05/Platinum-V2.git"
+   },
+   "bugs": {
+      "url": "https://github.com/Jupiterbold05/Platinum-V2/issues"
+   },
+   "homepage": "https://github.com/Jupiterbold05/Platinum-V2#readme"
+}
 }
